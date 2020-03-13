@@ -1,9 +1,11 @@
+# file initially included. Useful as sample code
 import lcd
 import image
 import time
 import uos
 from Maix import GPIO
 from fpioa_manager import *
+
 
 lcd.init()
 lcd.rotation(2) #Rotate the lcd 180deg
@@ -17,7 +19,12 @@ except:
 from Maix import I2S, GPIO
 import audio
 
+### play chime from speaker ###
+# https://maixpy.sipeed.com/en/libs/builtin_py/fm.html
+# https://maixpy.sipeed.com/en/libs/Maix/fpioa.html
+# set SD pin to function as GPIO0
 fm.register(board_info.SPK_SD, fm.fpioa.GPIO0)
+# set GPIO0 to be output SPI device, and write 1
 spk_sd=GPIO(GPIO.GPIO0, GPIO.OUT)
 spk_sd.value(1) #Enable the SPK output
 
@@ -25,6 +32,7 @@ fm.register(board_info.SPK_DIN,fm.fpioa.I2S0_OUT_D1)
 fm.register(board_info.SPK_BCLK,fm.fpioa.I2S0_SCLK)
 fm.register(board_info.SPK_LRCLK,fm.fpioa.I2S0_WS)
 
+# I2C = Inter-IC Sound, a protocol to transmit sound between IC devices. 3 lines are used.
 wav_dev = I2S(I2S.DEVICE_0)
 
 try:
@@ -43,7 +51,7 @@ try:
 except:
     pass
 
-fm.register(board_info.BUTTON_A, fm.fpioa.GPIO1)
+fm.register(board_info.BUTTON_A, fm.fpioa.GPIO1) # the big button next to the screen
 but_a=GPIO(GPIO.GPIO1, GPIO.IN, GPIO.PULL_UP) #PULL_UP is required here!
 
 if but_a.value() == 0: #If dont want to run the demo
@@ -87,13 +95,15 @@ while 1:
         time.sleep(0.1)
         continue
 
-sensor.set_pixformat(sensor.RGB565)
+sensor.set_pixformat(sensor.RGB565) # recommended setting
 sensor.set_framesize(sensor.QVGA) #QVGA=320x240
 sensor.run(1)
 
 task = kpu.load(0x300000) # Load Model File from Flash
 anchor = (1.889, 2.5245, 2.9465, 3.94056, 3.99987, 5.3658, 5.155437, 6.92275, 6.718375, 9.01025)
 # Anchor data is for bbox, extracted from the training sets.
+# https://pjreddie.com/darknet/yolov2/
+# https://github.com/leetenki/YOLOv2/blob/master/YOLOv2.md
 kpu.init_yolo2(task, 0.5, 0.3, 5, anchor)
 
 but_stu = 1
