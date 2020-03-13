@@ -1,3 +1,7 @@
+'''
+Sample program.
+Change LED color every time button is pressed.
+'''
 from Maix import GPIO
 from fpioa_manager import *
 
