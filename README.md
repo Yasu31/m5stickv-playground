@@ -12,3 +12,11 @@
 * https://github.com/sipeed/MaixPy_scripts
 * https://docs.m5stack.com/#/en/related_documents/M5StickV-Maixpy
 * https://raspberrypi.mongonta.com/howto-make-kmodel-on-ubuntu/
+* https://raspberrypi.mongonta.com/m5stickv-unitv-tips/
+
+# SD card
+This is the one I bought
+
+![](sd_card.jpg)
+
+[HIDISC ハイディスク HDMCSDH8GCL10UIJP3 SDHC UHS-1 8GB Class10](https://www.yodobashi.com/product/100000001003430692/)
